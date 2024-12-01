@@ -15,6 +15,12 @@ class JobTitleController extends Controller
         return response()->json($job_titles);
     }
 
+    public function list_with_profile()
+    {
+        $job_titles = JobTitle::with(['profiles'])->get();
+        return response()->json($job_titles);
+    }
+
     public function store(Request $request)
     {
         $request->validate([

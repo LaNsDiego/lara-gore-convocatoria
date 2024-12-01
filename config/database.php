@@ -89,6 +89,24 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
         ],
+        // 'foxpro' => array(
+        //     'driver' => 'odbc',
+        //     // cadena="Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=D:\SISTEMARRHH\ImplementacionSistemaRRHHGoreTacna\BD\SIAF\BACKUP_SIAF\Data_bk\SIAF.DBC;Exclusive=No;NULL=NO;Collate=Machine;BACKGROUNDFETCH=NO;DELETED=NO;"
+        //     'dsn' => 'Driver={Microsoft Visual FoxPro Driver};SourceDB=C:\binsweb\siaf\SIAF.dbc;SourceType=DBC',
+        //     'grammar' => '',
+        //     'username' => '',
+        //     'password' => '',
+        //     'database' => '',
+        // ),
+        'foxpro' => [
+            'driver'   => 'odbc',
+            'odbc'     => true,
+            'dsn'      => env('ODBC_DSN'),
+            'host'     => env('ODBC_HOST'),
+            'database' => env('ODBC_DB'),
+            'username' => env('ODBC_USERNAME'),
+            'password' => env('ODBC_PASSWORD'),
+        ],
 
     ],
 

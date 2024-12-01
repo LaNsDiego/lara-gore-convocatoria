@@ -3,7 +3,10 @@
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Department;
+use App\Models\ModuleGroup;
+use App\Models\PermissionSystem;
 use App\Models\Province;
+use App\Models\SystemModule;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +18,50 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        // MODULE GROUPS
+        // $grupo_home = ModuleGroup::create(['name' => 'Home']);
+        $grupo_configuracion = ModuleGroup::create(['name' => 'Configuración']);
+        $grupo_mantenimiento = ModuleGroup::create(['name' => 'Mantenimiento']);
+        // $grupo_gestion = ModuleGroup::create(['name' => 'Gestión']);
+        // $grupo_servicios = ModuleGroup::create(['name' => 'Servicios']);
+        // $grupo_reportes_estadisticos = ModuleGroup::create(['name' => 'Reportes Estadísticos']);
+
+
+        // GENERATING MODULE SYSTEMS
+        $modulos = [
+            // Home
+            // ['name' => 'Reporte estadistico', 'description' => 'Módulo de administración de dashboard', 'module_group_id' => $grupo_home->id],
+
+            // Configuración
+            ['name' => 'Roles y permisos', 'description' => 'Módulo de administración de permisos', 'module_group_id' => $grupo_configuracion->id],
+            ['name' => 'Usuarios', 'description' => 'Módulo de administración de usuarios', 'module_group_id' => $grupo_configuracion->id],
+
+            // Mantenimiento
+            ['name' => 'Cargo profesional', 'description' => 'Módulo de administración de títulos de trabajo', 'module_group_id' => $grupo_mantenimiento->id],
+            ['name' => 'Perfiles convocatoria', 'description' => 'Módulo de perfiles laborales', 'module_group_id' => $grupo_mantenimiento->id]            
+
+            // Reportes Detallados
+            // ['name' => 'Reporte de Actividades', 'description' => 'Módulo de administración de reporte de actividades', 'module_group_id' => $grupo_reportes_estadisticos->id],
+
+        ];
+
+
+        // Create modules and permissions
+        $permissions = [];
+        foreach ($modulos as $modulo) {
+            $createdModule = SystemModule::create($modulo);
+            $permission = PermissionSystem::create([
+                'action' => "$createdModule->name-ver",
+                'system_module_id' => $createdModule->id,
+            ]);
+            $permissions[] = $permission;
+
+            // if($createdModule->name === 'Busqueda') {
+            //     $this->permission_for_module_search_id = $permission->id;
+            // }
+        }
+        
 
         Country::create(['name' => 'Perú']);
         

@@ -13,24 +13,5 @@ use Illuminate\Http\Response;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    public function find_on_sir(Request $request){
-        $person = Person::
-            where('pers_cod',$request->document_number)
-            // ->orWhere('')
-            ->first();
-
-        if($person){
-            return response()->json([
-                'message' => 'Persona encontrada',
-                'person' => $person
-            ]);
-        }else{
-            return response()->json([
-                'message' => 'Persona no encontrada',
-                'person' => null
-            ],Response::HTTP_NOT_FOUND);
-        }
-    }
         
 }

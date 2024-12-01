@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "335e5ee29d5acecb409efc878f9a66b7",
+    "content-hash": "83ed8df87928a4c61dc14d1e3911fe06",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3216,6 +3216,68 @@
                 }
             ],
             "time": "2020-10-24T10:57:07+00:00"
+        },
+        {
+            "name": "szhorvath/visual-foxpro-orm",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/szhorvath/visual-foxpro-orm.git",
+                "reference": "f8c9cdff1237786fb5362a525c59760766e275e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/szhorvath/visual-foxpro-orm/zipball/f8c9cdff1237786fb5362a525c59760766e275e4",
+                "reference": "f8c9cdff1237786fb5362a525c59760766e275e4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.1",
+                "orchestra/testbench": "~3.0",
+                "phpunit/phpunit": "~7.0",
+                "sempro/phpunit-pretty-print": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Szhorvath\\FoxproDB\\FoxproDBServiceProvider"
+                    ],
+                    "aliases": {
+                        "FoxproDB": "Szhorvath\\FoxproDB\\Facades\\FoxproDB"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Szhorvath\\FoxproDB\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "license"
+            ],
+            "authors": [
+                {
+                    "name": "author name"
+                }
+            ],
+            "description": ":description",
+            "homepage": "https://github.com/szhorvath/visual-foxpro-orm",
+            "keywords": [
+                "foxpro",
+                "laravel",
+                "orm",
+                "visual"
+            ],
+            "support": {
+                "issues": "https://github.com/szhorvath/visual-foxpro-orm/issues",
+                "source": "https://github.com/szhorvath/visual-foxpro-orm/tree/0.1.0"
+            },
+            "time": "2019-04-30T09:42:04+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

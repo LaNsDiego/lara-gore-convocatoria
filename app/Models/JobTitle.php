@@ -18,4 +18,9 @@ class JobTitle extends Model
         'status',
     ];
 
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class);
+    }
+
 }
