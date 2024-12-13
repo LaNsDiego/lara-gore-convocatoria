@@ -65,6 +65,10 @@ return [
             'prefix' => '',
             'schema' => 'public',
             'sslmode' => 'prefer',
+            'options' => [
+                PDO::ATTR_PERSISTENT => false,
+                // PDO::PGSQL_CONNECT_ASYNC => false,
+            ]
         ],
         'pgsql_sir' => [
             'driver' => 'pgsql',
@@ -98,15 +102,18 @@ return [
         //     'password' => '',
         //     'database' => '',
         // ),
-        'foxpro' => [
-            'driver'   => 'odbc',
-            'odbc'     => true,
-            'dsn'      => env('ODBC_DSN'),
-            'host'     => env('ODBC_HOST'),
-            'database' => env('ODBC_DB'),
-            'username' => env('ODBC_USERNAME'),
-            'password' => env('ODBC_PASSWORD'),
-        ],
+        // 'odbc' => [
+        //     'driver'   => 'odbc',
+        //     'dsn'      => env('DB_ODBC_DSN'),
+        //     'username' => env('DB_ODBC_USER'),
+        //     'password' => env('DB_ODBC_PASSWORD'),
+        //     // 'database' => env('DB_ODBC_DATABASE','siaf'),
+        //     'options'  => [
+        //         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        //         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        //     ],
+        // ],
+    
 
     ],
 

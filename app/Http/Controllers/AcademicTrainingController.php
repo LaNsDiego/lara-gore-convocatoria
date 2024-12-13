@@ -97,18 +97,16 @@ class AcademicTrainingController extends Controller
             $authorization_certificate = $request->authorization_certificates_certicates[$i];
             $authorization_start_date = $request->authorization_certificates_start_dates[$i];
             $authorization_end_date = $request->authorization_certificates_end_dates[$i];
-            // $authorization_certificate_file = $request->authorization_certificates_files[$i];
+            
 
             $authorization_cert_entity = new AuthorizationCertificate();
             $authorization_cert_entity->academic_training_id = $academic_training->id;
             $authorization_cert_entity->authorization_certificate = $authorization_certificate;
             $authorization_cert_entity->authorization_start_date = $authorization_start_date;
             $authorization_cert_entity->authorization_end_date = $authorization_end_date;
-            // $authorization_certificate->authorization_file = '';
-            // if ($item->hasFile('authorization_file')) {
                 
-                $authorization_cert_entity->authorization_file = $files[$i]->store('authorization_file','public');
-            // }
+            $authorization_cert_entity->authorization_file = $files[$i]->store('authorization_file','public');
+            
             $authorization_cert_entity->save();
         }
 

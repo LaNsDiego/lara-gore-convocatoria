@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TablaFox extends Model
 {
 
-    protected $connection = 'foxpro';
+    protected $connection = 'odbc';
 
     public $table = "gasto";
 

@@ -34,6 +34,9 @@ class CreateTrainingsTable extends Migration
             $table->string('date_resolution'); // Fecha de resolución
             $table->string('number_resolution'); // Número de resolución
             $table->string('file')->nullable(); // Ruta del archivo (opcional)
+            $table->integer('hours')->nullable(); // Ruta del archivo (opcional)
+            $table->integer('credits')->nullable(); // Ruta del archivo (opcional)
+            $table->string('file_register')->nullable(); // Ruta del archivo (opcional)
             $table->timestamps();
         });
     }

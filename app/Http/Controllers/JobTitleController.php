@@ -67,4 +67,9 @@ class JobTitleController extends Controller
         $job_title->delete();
         return response()->json(['message' => 'El cargo fue eliminada exitosamente' ], Response::HTTP_OK);
     }
+
+    public function next_code(){
+        $maxId = JobTitle::max('id') + 1;
+        return response()->json(str_pad($maxId,3,'0',STR_PAD_LEFT));
+    }
 }

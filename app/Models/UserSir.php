@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -8,8 +8,10 @@ use Illuminate\Notifications\Notifiable;
 class UserSir extends Model
 {
     protected $connection = 'pgsql_sir';
-    protected $table = 'sys.usuario';
-    protected $primaryKey = 'usuario_cod';
+    protected $table = 'rrhh.personal';
+    protected $keyType = 'string';
+    // protected $primaryKey = 'usuario_cod';
+    protected $primaryKey = 'pers_cod';
     use Notifiable;
 
     /**
@@ -18,16 +20,13 @@ class UserSir extends Model
      * @var array
      */
     protected $fillable = [
-        'usuario_cod',
-        'usuario_pass',
-        'usuario_nomb',
-        'usuario_apat',
-        'usuario_amat',
-        'usuario_dni',
-        'usuario_estado',
-        'usuario_fechreg',
-        'usuario_fechexp',
-        'sys_log',
+        'pers_cod',
+        'pers_apepat',
+        'pers_apemat',
+        'pers_nombre',
+        'pers_nombre_2',
+        'pers_sexo',
+        'pers_direccion',
         'sec_eje',
     ];
 
@@ -37,6 +36,6 @@ class UserSir extends Model
      * @var array
      */
     protected $hidden = [
-        'usuario_pass',
+        // 'usuario_pass',
     ];
 }

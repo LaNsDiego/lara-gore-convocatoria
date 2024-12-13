@@ -48,4 +48,10 @@ class WorkExperienceController extends Controller
 
         return response()->json(['message' => 'Experiencia laboral registrada exitosamente'], Response::HTTP_OK);
     }
+
+    public function delete(Request $request , $id){
+        $work_experience = WorkExperience::find($id);
+        $work_experience->delete();
+        return response()->json(['message' => 'Experiencia laboral eliminada exitosamente'], Response::HTTP_OK);
+    }
 }

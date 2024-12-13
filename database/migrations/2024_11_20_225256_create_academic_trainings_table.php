@@ -45,10 +45,10 @@ class CreateAcademicTrainingsTable extends Migration
             $table->string('tuition_date');
             $table->string('tuition_file');
             
-            $table->string('authorization_certificate');
-            $table->string('authorization_start_date');
-            $table->string('authorization_end_date');
-            $table->string('authorization_file');
+            // $table->string('authorization_certificate');
+            // $table->string('authorization_start_date');
+            // $table->string('authorization_end_date');
+            // $table->string('authorization_file');
             
             $table->timestamps();
         });

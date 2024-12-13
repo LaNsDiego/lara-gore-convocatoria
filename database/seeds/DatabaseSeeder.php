@@ -6,8 +6,13 @@ use App\Models\Department;
 use App\Models\ModuleGroup;
 use App\Models\PermissionSystem;
 use App\Models\Province;
+use App\Models\Role;
+use App\Models\RoleHasPermission;
 use App\Models\SystemModule;
+use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -39,7 +44,9 @@ class DatabaseSeeder extends Seeder
 
             // Mantenimiento
             ['name' => 'Cargo profesional', 'description' => 'Módulo de administración de títulos de trabajo', 'module_group_id' => $grupo_mantenimiento->id],
-            ['name' => 'Perfiles convocatoria', 'description' => 'Módulo de perfiles laborales', 'module_group_id' => $grupo_mantenimiento->id]            
+            ['name' => 'Perfiles convocatoria', 'description' => 'Módulo de perfiles laborales', 'module_group_id' => $grupo_mantenimiento->id],   
+            ['name' => 'Requerimiento personal', 'description' => 'Módulo de requerimientos', 'module_group_id' => $grupo_mantenimiento->id],       
+            ['name' => 'Datos personales', 'description' => 'Módulo de empleados', 'module_group_id' => $grupo_mantenimiento->id]            
 
             // Reportes Detallados
             // ['name' => 'Reporte de Actividades', 'description' => 'Módulo de administración de reporte de actividades', 'module_group_id' => $grupo_reportes_estadisticos->id],
@@ -47,20 +54,38 @@ class DatabaseSeeder extends Seeder
         ];
 
 
+        $actions = ['crear', 'leer', 'editar', 'eliminar'];
         // Create modules and permissions
         $permissions = [];
         foreach ($modulos as $modulo) {
             $createdModule = SystemModule::create($modulo);
-            $permission = PermissionSystem::create([
-                'action' => "$createdModule->name-ver",
-                'system_module_id' => $createdModule->id,
-            ]);
-            $permissions[] = $permission;
-
-            // if($createdModule->name === 'Busqueda') {
-            //     $this->permission_for_module_search_id = $permission->id;
-            // }
+            foreach($actions as $action) {
+                $permission = PermissionSystem::create([
+                    'action' => Str::slug(strtolower($createdModule->name))."-$action",
+                    'system_module_id' => $createdModule->id,
+                ]);
+                $permissions[] = $permission;
+            }
         }
+
+        $role_admin = Role::create(['name' => 'ADMINISTRADOR']);
+        foreach ($permissions as $permission) {
+            RoleHasPermission::create([
+                'role_id' => $role_admin->id,
+                'permission_id' => $permission->id,
+                'has_access' => true
+            ]);
+        }
+
+        $admin = User::create([
+            'name' => 'Administrador',
+            'dni' => '00000000',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('123123123'),
+            'role_id' => $role_admin->id
+        ]);
+
+
         
 
         Country::create(['name' => 'Perú']);

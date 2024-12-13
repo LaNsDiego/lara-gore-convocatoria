@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Person;
+use App\Models\UserSir;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +15,7 @@ class PersonController extends Controller
     public function find_on_sir(Request $request){
 
         $exists = Employee::where('document_number',$request->document_number)->exists();
-        $person_sir = Person::
+        $person_sir = UserSir::
             where('pers_cod',$request->document_number)
             // ->orWhere('')
             ->first();
