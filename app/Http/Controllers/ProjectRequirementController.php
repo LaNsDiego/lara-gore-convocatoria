@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProjectRequirement;
 use App\Models\ProjectRequirementDetail;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -150,5 +151,13 @@ class ProjectRequirementController extends Controller
         return response()->json([
             'message' => 'Projecto cerrado correctamente',
         ], 200);
+    }
+
+        
+    public function delete(Request $request , $id){
+
+        $project = ProjectRequirement::find($id);
+        $project->delete();
+        return response()->json(['message' => 'El cargo fue eliminada exitosamente' ], Response::HTTP_OK);
     }
 }

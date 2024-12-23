@@ -81,6 +81,7 @@ Route::get('project-requirements/list', 'ProjectRequirementController@list');
 Route::get('project-requirements/freeze/{project_id}', 'ProjectRequirementController@freeze');
 Route::post('project-requirements/store', 'ProjectRequirementController@store');
 Route::post('project-requirements/update', 'ProjectRequirementController@update');
+Route::get('project-requirements/delete/{id}', 'ProjectRequirementController@delete');
 Route::post('project-requirements/real-saldo', 'ProjectRequirementController@real_saldo');
 
 Route::get('project-requirement-details/delete/{id}', 'ProjectRequirementDetailController@delete');
