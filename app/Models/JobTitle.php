@@ -16,6 +16,8 @@ class JobTitle extends Model
         'code',
         'name',
         'status',
+        'observation',
+        'executor_unit',
     ];
 
     public function profiles()

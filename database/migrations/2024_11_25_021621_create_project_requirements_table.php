@@ -19,6 +19,8 @@ class CreateProjectRequirementsTable extends Migration
             $table->string('specific_expenditure');
             $table->string('project_name');
             $table->string('amount_as_specified');
+            $table->boolean('is_freeze')->default(false);
+            $table->string('executor_unit');
 
             $table->string('dni_responsible');
             $table->string('full_name_responsible');

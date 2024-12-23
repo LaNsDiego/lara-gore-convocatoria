@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class EmployeeController extends Controller
 {
     public function list(){
-        $employees = Employee::with(['address_city.province.department.country','birth_city.province.department.country'])->get();
+        $token = JWTAuth::fromUser(Auth::user());
+        $payload = JWTAuth::setToken($token)->getPayload();
+        
+        $employees = Employee::where('executor_unit',$payload['executor_unit'])->with(['address_city.province.department.country','birth_city.province.department.country'])->get();
         return response()->json($employees);
     }
 
@@ -39,6 +44,7 @@ class EmployeeController extends Controller
             'account_number' => 'required|string|max:255',
             'cci' => 'required|string|max:255',
             'account_type' => 'required|string|max:255',
+            'executor_unit' => 'required',
         ]);
         
         $employee = new Employee();
@@ -52,6 +58,7 @@ class EmployeeController extends Controller
         $employee->date_of_birth = $request->date_of_birth;
         $employee->phone_number = $request->phone_number;
         $employee->email = $request->email;
+        $employee->executor_unit = $request->executor_unit;
 
         $employee->file_data_employee = '';
         if($request->hasFile('file_data_employee')){
@@ -151,5 +158,12 @@ class EmployeeController extends Controller
         }
         $employee->save();
         return response()->json(['message' => 'Datos personales ingresados correctamente'],Response::HTTP_CREATED);
+    }
+
+    public function delete(Request $request,$id){
+
+        $employee = Employee::find($id);
+        $employee->delete();
+        return response()->json(['message' => 'Datos personales eliminados correctamente'],Response::HTTP_OK);
     }
 }

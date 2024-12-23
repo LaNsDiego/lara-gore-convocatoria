@@ -15,8 +15,10 @@ class CreateJobTitlesTable extends Migration
     {
         Schema::create('job_titles', function (Blueprint $table) {
             $table->increments('id')->comment('Identificador de cargo');
+            $table->string('executor_unit')->comment('Unidad Ejecutora');
             $table->string('code')->comment('Código del cargo');
             $table->string('name')->comment('Nombre del cargo');
+            $table->text('observation')->comment('Observacion del cargo');
             $table->string('status')->comment('Estado del cargo');
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);

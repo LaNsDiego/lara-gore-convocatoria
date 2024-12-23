@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\ProjectRequirement;
 use App\Models\ProjectRequirementDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ProjectRequirementController extends Controller
 {
 
     public function list(){
-        return response()->json(ProjectRequirement::all());
+        $token = JWTAuth::fromUser(Auth::user());
+        $payload = JWTAuth::setToken($token)->getPayload();
+        return response()->json(ProjectRequirement::where('executor_unit',$payload['executor_unit'])->get());
     }
     public function store(Request $request){
         $request->validate([
@@ -24,6 +28,7 @@ class ProjectRequirementController extends Controller
             'document_type' => 'required|string',
             'document_number' => 'required|string',
             'employeeRequirements' => 'required|array',
+            'executor_unit' => 'required',
         ]);
 
         $new = new ProjectRequirement();
@@ -118,7 +123,11 @@ class ProjectRequirementController extends Controller
 
             //foreach for sum details of projects
             $total = $project->map(function($item){
-                $amount_required_used = ProjectRequirementDetail::where('project_requirement_id', $item->id)->get()->sum('amount_required');
+                $amount_required_used = ProjectRequirementDetail::
+                    where('project_requirement_id', $item->id)
+                    ->where('deleted_at', null)
+                    ->get()
+                    ->sum('amount_required');
                 $item->amount_as_specified_2 = floatval($amount_required_used);
                 return $item;
             })->sum('amount_as_specified_2');
@@ -128,5 +137,14 @@ class ProjectRequirementController extends Controller
         return response()->json([
             'message' => 'Al parecer es el primer proyecto con este código',
         ], 404);
+    }
+
+    public function freeze($project_id) {
+        $project = ProjectRequirement::find($project_id);
+        $project->is_freeze = true;
+        $project->save();
+        return response()->json([
+            'message' => 'Projecto cerrado correctamente',
+        ], 200);
     }
 }

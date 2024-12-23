@@ -17,6 +17,7 @@ class CreateEmployeesTable extends Migration
 
             // DATOS PERSONALES
             $table->increments('id')->comment('Identificador de empleado');
+            $table->string('executor_unit')->comment('Unidad Ejecutora');
             $table->string('document_type')->comment('Tipo de documento');
             $table->string('document_number')->comment('Número de documento');
             $table->string('first_name')->comment('Nombre del empleado');

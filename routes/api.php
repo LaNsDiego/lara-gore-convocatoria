@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\TablaFox;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
+// Route::middleware('auth:api')->get('/user', function () {
+//     return response()->json(Auth::user());
 // });
+
+Route::post('verify/login', 'Auth\AuthenticationController@login');
+
+Route::group(
+    [
+        'middleware' => 'auth:api'
+    ],
+    function () {
+       
 
 Route::get('roles/list', 'RoleController@list');
 Route::post('roles/store', 'RoleController@store');
@@ -41,8 +51,6 @@ Route::post('permissions/update-permissions', 'PermissionController@update_permi
 Route::get('permissions/list-by-role/{role_id}', 'PermissionController@permissions_by_role');
 
 
-Route::post('verify/login', 'Auth\AuthenticationController@login');
-
 Route::get('job-titles/list', 'JobTitleController@list');
 Route::get('job-titles/list-with-profiles', 'JobTitleController@list_with_profile');
 Route::post('job-titles/store', 'JobTitleController@store');
@@ -53,7 +61,7 @@ Route::get('job-titles/next-code', 'JobTitleController@next_code');
 Route::get('job-profiles/list', 'JobProfileController@list');
 Route::post('job-profiles/store', 'JobProfileController@store');
 Route::post('job-profiles/update', 'JobProfileController@update');
-Route::post('job-profiles/delete', 'JobProfileController@destroy');
+Route::get('job-profiles/delete/{id}', 'JobProfileController@destroy');
 
 
 Route::get('jobtitle-assigned/list-by-requirement-detail/{requirement_detail_id}', 'JobTitleAssignedController@list_project_requirement_detail');
@@ -67,11 +75,16 @@ Route::get('employees/list', 'EmployeeController@list');
 Route::get('employees/getone/{employee_id}', 'EmployeeController@get_one');
 Route::post('employees/store', 'EmployeeController@store');
 Route::post('employees/update', 'EmployeeController@update');
+Route::get('employees/delete/{id}', 'EmployeeController@delete');
 
 Route::get('project-requirements/list', 'ProjectRequirementController@list');
+Route::get('project-requirements/freeze/{project_id}', 'ProjectRequirementController@freeze');
 Route::post('project-requirements/store', 'ProjectRequirementController@store');
 Route::post('project-requirements/update', 'ProjectRequirementController@update');
 Route::post('project-requirements/real-saldo', 'ProjectRequirementController@real_saldo');
+
+Route::get('project-requirement-details/delete/{id}', 'ProjectRequirementDetailController@delete');
+Route::post('project-requirement-details/store', 'ProjectRequirementDetailController@store');
 
 Route::get('work-experiences/list/{employee_id}', 'WorkExperienceController@list');
 Route::post('work-experiences/store', 'WorkExperienceController@store');
@@ -89,55 +102,9 @@ Route::get('project-requirement-details/list-by-project-requirement/{project_req
 Route::post('project-requirement-details/update', 'ProjectRequirementDetailController@update');
 Route::get('countries/list', 'CountryController@list');
 
-Route::get('executing-units/list', 'ExecutingUnitController@list');
 
 
 Route::post('foxpro/find-by-expendspecific-secfunc', 'FoxProController@find_by_expendspecific_secfunc');
-Route::get('gastos',function (){
-    // phpinfo();
-    // return PHP_INT_SIZE * 8 . " bits";
-    // TablaFox::all();
-    // $cnx = odbc_connect('Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=\\127.0.0.1\\binsweb\\siaf\\siaf.dbc;Exclusive=No;', '', '');
-    $cnx = odbc_connect('Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=C:\Users\dvans\Documents\siaf\SIAF.DBC;Exclusive=No;NULL=NO;', '', '');
-    // $cnx = odbc_connect('Driver=vfpoledb;SourceType=DBC;SourceDB=C:\Users\dvans\Documents\siaf\SIAF.DBC;Exclusive=No;NULL=NO;', '', '');
-    // $cnx = odbc_connect('siafdbc', '', '');
-
-    if(!$cnx){
-        return response()->json([
-            'message' => 'No se pudo conectar a la base de datos'
-        ]);
-    }
-
-    $especific = "3.8.1.4.1";
-    $parts = explode('.', $especific);
-
-    $ano_eje = '2024';
-    $tipo_transaccion = '2';
-    $generica = '6';
-    $subgenerica = '8';
-    $subgenerica_det = '1';
-    $especifica = '4';
-    $especifica_det = '1';
-    $data = [];
-
-    // Consulta a ejecutar
-    $sql = "SELECT * FROM act_proy_nombre WHERE ano_eje='2024' AND act_proy=
-    (SELECT act_proy FROM meta WHERE ano_eje='2024' AND sec_ejec='000931' AND sec_func='0770')"; // Cambia 'tu_tabla' por el nombre de tu tabla
-    // $sql = "SELECT id_clasificador FROM especifica_det WHERE ano_eje='2024' AND tipo_transaccion='2' AND generica='6' AND subgenerica=' 8' AND subgenerica_det=' 1' AND especifica=' 4' AND ALLTRIM(especifica_det)='1'";
-
-    // Ejecutar la consulta
-    $resultado = @odbc_exec($cnx, $sql);
-
-    if (!$resultado) {
-        die("Error en la consulta: " . odbc_errormsg());
-    }  
-
-    // Obtener resultados
-    while ($fila = odbc_fetch_array($resultado)) {
-        array_push($data,$fila); // Imprime cada fila como un array asociativo
-    }
-
-    return response()->json([
-        'message' => $data ,
-    ]);
-});
+}
+);
+Route::get('executing-units/list', 'ExecutingUnitController@list');

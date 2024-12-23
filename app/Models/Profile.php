@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Profile extends Model
 {
+    public $table = 'profiles';
     use SoftDeletes;
     
 
@@ -17,6 +18,7 @@ class Profile extends Model
         'request_name',
         'description',
         'status',
+        'executor_unit',
     ];
 
     public function job_title()

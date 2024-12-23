@@ -15,6 +15,7 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id')->comment('Identificador de cargo');
+            $table->string('executor_unit')->comment('Unidad Ejecutora');
             $table->string('job_title_id')->comment('Puesto del cargo');
             $table->string('request_name')->comment('Nombre del cargo');
             $table->string('description')->comment('Descripción del cargo');

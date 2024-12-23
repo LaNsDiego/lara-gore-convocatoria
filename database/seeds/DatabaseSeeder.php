@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
         ];
 
 
-        $actions = ['crear', 'leer', 'editar', 'eliminar'];
+        $actions = ['crear', 'leer', 'editar', 'eliminar','cerrar'];
         // Create modules and permissions
         $permissions = [];
         foreach ($modulos as $modulo) {

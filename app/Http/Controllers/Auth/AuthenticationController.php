@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthenticationController extends Controller
@@ -21,32 +18,19 @@ class AuthenticationController extends Controller
                 'message' => 'DNI no encontrado'
             ],404);
         }
+        
 
-        $isSamePWD = Hash::check(
-            $request->password,
-            $user_dni->password
-        );
-
-        // if (!$token = JWTAuth::attempt($credentials)) {
-        //     return response()->json(['error' => 'Credenciales inválidas'], 401);
-        // }
-
-        if(!$token = JWTAuth::claims(['user' => $user_dni])->attempt(['dni' => $request->dni, 'password' => $request->password])){
+        $user_dni->executor_unit = $request->executing_unit;
+        if(!$token = JWTAuth::claims(['user' => $user_dni , 'executor_unit' => $request->executing_unit  ])->attempt(['dni' => $request->dni, 'password' => $request->password])){
 
             return response()->json([
                 'message' => 'Usuario no autorizado'
             ],404);
             
         }
-
-        // return response()->json([
-        //     'access_token' => $token,
-        //     'token_type' => 'bearer',
-        //     'expires_in' => auth('api')->factory()->getTTL() * 60 * 24,
-        //     'role' => $role,
-        // ]);
         
         $role = Role::with(['permissions.permission.system_module.module_group'])->where('id', $user_dni->role_id)->first();
+        
         return response()->json([
             'user' => $user_dni,
             // 'expires_in' => auth('api')->factory()->getTTL() * 60 * 24,
