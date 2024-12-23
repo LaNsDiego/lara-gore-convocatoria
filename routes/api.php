@@ -85,6 +85,7 @@ Route::post('project-requirements/real-saldo', 'ProjectRequirementController@rea
 
 Route::get('project-requirement-details/delete/{id}', 'ProjectRequirementDetailController@delete');
 Route::post('project-requirement-details/store', 'ProjectRequirementDetailController@store');
+Route::post('project-requirement-details/update/no-rrhh', 'ProjectRequirementDetailController@update_no_rrhh');
 
 Route::get('work-experiences/list/{employee_id}', 'WorkExperienceController@list');
 Route::post('work-experiences/store', 'WorkExperienceController@store');

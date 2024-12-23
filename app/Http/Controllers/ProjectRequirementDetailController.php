@@ -46,6 +46,17 @@ class ProjectRequirementDetailController extends Controller
         return response()->json(['message' => 'Requerimiento actualizado correctamente']);
     }
 
+    public function update_no_rrhh(Request $request){
+        $request->validate([
+            'id' => 'required',
+            'amount_required' => 'required|numeric',
+        ]);
+        $project_requirement_detail = ProjectRequirementDetail::find($request->id);
+        $project_requirement_detail->amount_required = $request->amount_required;
+        $project_requirement_detail->save();
+        return response()->json(['message' => 'Requerimiento actualizado correctamente']);
+    }
+
     public function delete($id){
         $project_requirement_detail = ProjectRequirementDetail::find($id);
         if ($project_requirement_detail) {

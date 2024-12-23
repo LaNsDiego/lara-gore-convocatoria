@@ -31,6 +31,9 @@ class ProjectRequirementController extends Controller
             'executor_unit' => 'required',
         ]);
 
+        $token = JWTAuth::fromUser(Auth::user());
+        $payload = JWTAuth::setToken($token)->getPayload();
+
         $new = new ProjectRequirement();
         $new->functional_sequence = $request->functional_sequence;
         $new->specific_expenditure = $request->specific_expenditure;
@@ -40,6 +43,7 @@ class ProjectRequirementController extends Controller
         $new->full_name_responsible = $request->full_name_responsible;
         $new->document_type = $request->document_type;
         $new->document_number = $request->document_number;
+        $new->executor_unit = $payload['executor_unit'];
         $new->save();
 
         $details = $request->employeeRequirements;
