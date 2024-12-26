@@ -96,6 +96,12 @@ Route::get('work-experiences/delete/{id}', 'WorkExperienceController@delete');
 Route::get('academic-training/list/{employee_id}', 'AcademicTrainingController@list');
 Route::post('academic-training/store', 'AcademicTrainingController@store');
 Route::post('academic-training/update', 'AcademicTrainingController@update');
+Route::get('academic-training/delete/{id}', 'AcademicTrainingController@delete');
+
+
+Route::get('authorization-certificates/list-by-academic-training/{academic_training_id}', 'AuthorizationCertificateController@list_by_academic_training');
+Route::post('authorization-certificates/store', 'AuthorizationCertificateController@store');
+Route::get('authorization-certificates/delete/{id}', 'AuthorizationCertificateController@delete');
 
 Route::get('training/list/{employee_id}', 'TrainingController@list');
 Route::post('training/store', 'TrainingController@store');

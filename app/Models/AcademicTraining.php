@@ -16,7 +16,7 @@ class AcademicTraining extends Model
         return $this->belongsTo(Country::class, 'education_country_id');
     }
 
-    public function academicSituationCity(){
+    public function academic_situation_city(){
         return $this->belongsTo(City::class, 'academic_situation_city_id');
     }
 
@@ -51,6 +51,22 @@ class AcademicTraining extends Model
 
     public function authorization_certificates(){
         return $this->hasMany(AuthorizationCertificate::class);
+    }
+
+
+    public $appends = [
+        'full_path_qualification_file',
+        'full_path_tuition_file',
+    ];
+
+    public function getFullPathQualificationFileAttribute()
+    {
+        return config('extravars.storage')."/".$this->attributes['qualification_file'];
+    }
+    
+    public function getFullPathTuitionFileAttribute()
+    {
+        return config('extravars.storage')."/".$this->attributes['tuition_file'];
     }
 
 }

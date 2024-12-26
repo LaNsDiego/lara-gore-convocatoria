@@ -21,6 +21,7 @@ class CreateAuthorizationCertificatesTable extends Migration
             $table->string('authorization_end_date');
             $table->string('authorization_file');
             $table->foreign('academic_training_id')->references('id')->on('academic_trainings');
+            // $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -41,7 +41,7 @@ class PersonController extends Controller
                 $person->sex = '';
 
                 return response()->json([
-                    'message' => 'Persona encontrada',
+                    'message' => 'Persona encontrada en RENIEC',
                     'person' => $person,
                     'exists' => $exists
                 ]);

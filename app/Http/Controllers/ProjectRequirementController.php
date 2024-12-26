@@ -16,7 +16,20 @@ class ProjectRequirementController extends Controller
     public function list(){
         $token = JWTAuth::fromUser(Auth::user());
         $payload = JWTAuth::setToken($token)->getPayload();
-        return response()->json(ProjectRequirement::where('executor_unit',$payload['executor_unit'])->get());
+        
+        if($payload['user']['role_id'] != '1'){
+            return response()->json(
+                ProjectRequirement::
+                    where('executor_unit',$payload['executor_unit'])
+                ->get()
+            );
+        }
+        return response()->json(
+            ProjectRequirement::
+                where('executor_unit',$payload['executor_unit'])
+                ->where('dni_responsible',$payload['user']['dni'])
+            ->get()
+        );
     }
     public function store(Request $request){
         $request->validate([
@@ -132,7 +145,9 @@ class ProjectRequirementController extends Controller
                     where('project_requirement_id', $item->id)
                     ->where('deleted_at', null)
                     ->get()
-                    ->sum('amount_required');
+                    ->reduce(function ($carry, $detail) {
+                        return $carry + ($detail->amount_rrhh == 0 ? $detail->amount_required : $detail->amount_rrhh);
+                    }, 0);
                 $item->amount_as_specified_2 = floatval($amount_required_used);
                 return $item;
             })->sum('amount_as_specified_2');
