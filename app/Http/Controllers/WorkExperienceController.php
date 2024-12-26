@@ -48,6 +48,41 @@ class WorkExperienceController extends Controller
 
         return response()->json(['message' => 'Experiencia laboral registrada exitosamente'], Response::HTTP_OK);
     }
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:work_experiences,id',
+            'employee_id' => 'required|integer',
+            'sector' => 'required|string|max:255',
+            'experience_type' => 'required|string|max:255',
+            'entity' => 'required|string|max:255',
+            'job_title' => 'required|string|max:255',
+            'functions_performed' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'document_name' => 'required|string|max:255',
+        ]);
+        $work_experience = WorkExperience::find($request->id);
+        $work_experience->employee_id = $request->employee_id;
+        $work_experience->sector = $request->sector;
+        $work_experience->experience_type = $request->experience_type;
+        $work_experience->entity = $request->entity;
+        $work_experience->job_title = $request->job_title;
+        $work_experience->functions_performed = $request->functions_performed;
+        $work_experience->start_date = $request->start_date;
+        $work_experience->end_date = $request->end_date;
+        $work_experience->document_name = $request->document_name;
+        
+        
+        $work_experience->file = '';
+        if($request->hasFile('file')){
+            $photo = $request->file('file');
+            $work_experience->file = $photo->store('experience','public');
+        }
+        $work_experience->save();
+
+        return response()->json(['message' => 'Experiencia laboral registrada exitosamente'], Response::HTTP_OK);
+    }
 
     public function delete(Request $request , $id){
         $work_experience = WorkExperience::find($id);

@@ -25,6 +25,8 @@ class CreateWorkExperiencesTable extends Migration
             $table->string('end_date')->comment('Fecha de fin');
             $table->string('document_name')->comment('Nombre del documento');
             $table->string('file')->comment('Ruta del archivo');
+
+            $table->softDeletes('deleted_at', 0);
             $table->timestamps();
         });
     }
