@@ -51,14 +51,20 @@ Route::post('permissions/update-permissions', 'PermissionController@update_permi
 Route::get('permissions/list-by-role/{role_id}', 'PermissionController@permissions_by_role');
 
 
-Route::get('job-titles/list', 'JobTitleController@list');
-Route::get('job-titles/list-with-profiles', 'JobTitleController@list_with_profile');
-Route::post('job-titles/store', 'JobTitleController@store');
-Route::post('job-titles/update', 'JobTitleController@update');
-Route::post('job-titles/delete', 'JobTitleController@destroy');
-Route::get('job-titles/next-code', 'JobTitleController@next_code');
+// SIR JOBTITLES
+Route::get('job-titles-sir/list', 'JobTitleSirController@list');
+Route::get('job-titles-sir/list-with-profiles', 'JobTitleSirController@list_with_profile');
+
+
+// Route::get('job-titles/list', 'JobTitleController@list');
+// Route::get('job-titles/list-with-profiles', 'JobTitleController@list_with_profile');
+// Route::post('job-titles/store', 'JobTitleController@store');
+// Route::post('job-titles/update', 'JobTitleController@update');
+// Route::post('job-titles/delete', 'JobTitleController@destroy');
+// Route::get('job-titles/next-code', 'JobTitleController@next_code');
 
 Route::get('job-profiles/list', 'JobProfileController@list');
+Route::get('job-profiles/list-by-cargo-sir/{cargo_sir}', 'JobProfileController@list_by_cargo_sir');
 Route::post('job-profiles/store', 'JobProfileController@store');
 Route::post('job-profiles/update', 'JobProfileController@update');
 Route::get('job-profiles/delete/{id}', 'JobProfileController@destroy');
@@ -111,6 +117,10 @@ Route::post('project-requirement-details/update', 'ProjectRequirementDetailContr
 Route::get('countries/list', 'CountryController@list');
 
 
+Route::get('project-requirement-assigneds/user-list/{project_requeriment_id}', 'ProjectRequirementAssignController@list_user_availables');
+Route::get('project-requirement-assigneds/list-by-project-requirement/{project_requirement_id}', 'ProjectRequirementAssignController@list_by_project_requirement');
+Route::post('project-requirement-assigneds/store', 'ProjectRequirementAssignController@store');
+Route::post('project-requirement-assigneds/delete', 'ProjectRequirementAssignController@delete');
 
 Route::post('foxpro/find-by-expendspecific-secfunc', 'FoxProController@find_by_expendspecific_secfunc');
 }

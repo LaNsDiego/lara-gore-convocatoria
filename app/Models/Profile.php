@@ -23,7 +23,8 @@ class Profile extends Model
 
     public function job_title()
     {
-        return $this->belongsTo(JobTitle::class);
+        // return $this->belongsTo(JobTitle::class);
+        return $this->belongsTo(CargoSir::class,'job_title_id','id_cargo');
     }
 
 }

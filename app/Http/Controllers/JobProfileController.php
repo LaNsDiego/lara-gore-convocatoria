@@ -18,10 +18,16 @@ class JobProfileController extends Controller
         return response()->json($profiles);
     }
 
+    public function list_by_cargo_sir($cargo_sir){
+        $profiles = Profile::where('job_title_id',$cargo_sir)->get();
+        return response()->json($profiles);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
-            'job_title_id' => 'required|exists:job_titles,id',
+            // 'job_title_id' => 'required|exists:job_titles,id',
+            'job_title_id' => 'required',
             'request_name' => 'required',
             'description' => 'required',
             'status' => 'required',

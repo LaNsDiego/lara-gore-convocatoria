@@ -18,18 +18,21 @@ class ProjectRequirementController extends Controller
         $payload = JWTAuth::setToken($token)->getPayload();
         
         if($payload['user']['role_id'] != '1'){
-            return response()->json(
-                ProjectRequirement::
-                    where('executor_unit',$payload['executor_unit'])
-                ->get()
-            );
+            $project_requirements = ProjectRequirement::
+                whereHas('assignations', function($query) use ($payload) {
+                    $query->where('user_id',$payload['user']['id']);
+                })
+                ->where('executor_unit',$payload['executor_unit'])
+            ->get();
+            return response()->json($project_requirements);
         }
+
         return response()->json(
-            ProjectRequirement::
-                where('executor_unit',$payload['executor_unit'])
-                ->where('dni_responsible',$payload['user']['dni'])
-            ->get()
+            ProjectRequirement::get()
         );
+
+
+        
     }
     public function store(Request $request){
         $request->validate([
@@ -92,18 +95,6 @@ class ProjectRequirementController extends Controller
             'document_number' => 'required|string',
             'employeeRequirements' => 'required|array',
         ]);
-
-        Log::info($request->all());
-        // $new = new ProjectRequirement();
-        // $new->functional_sequence = $request->functional_sequence;
-        // $new->specific_expenditure = $request->specific_expenditure;
-        // $new->project_name = $request->project_name;
-        // $new->amount_as_specified = $request->amount_as_specified;
-        // $new->dni_responsible = $request->dni_responsible;
-        // $new->full_name_responsible = $request->full_name_responsible;
-        // $new->document_type = $request->document_type;
-        // $new->document_number = $request->document_number;
-        // $new->save();
 
         $new = ProjectRequirement::find($request->id);
 
