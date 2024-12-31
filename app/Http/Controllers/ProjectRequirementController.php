@@ -139,7 +139,8 @@ class ProjectRequirementController extends Controller
                     ->where('deleted_at', null)
                     ->get()
                     ->reduce(function ($carry, $detail) {
-                        return $carry + ($detail->amount_rrhh == 0 ? $detail->amount_required : $detail->amount_rrhh);
+                        // return $carry + ($detail->amount_rrhh == 0 ? $detail->amount_required : $detail->amount_rrhh);
+                        return $carry + ($detail->total_amount);
                     }, 0);
                 $item->amount_as_specified_2 = floatval($amount_required_used);
                 return $item;
