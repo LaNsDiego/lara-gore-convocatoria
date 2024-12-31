@@ -71,8 +71,10 @@ class ProjectRequirementController extends Controller
             $project_req_detail->father_last_name = $detail['father_last_name'];
             $project_req_detail->mother_last_name = $detail['mother_last_name'];
             $project_req_detail->amount_required = $detail['amount_required'];
+            $project_req_detail->essalud = floatval($detail['amount_required']) * 0.09;
             $project_req_detail->amount_rrhh = 0;
             $project_req_detail->observation = '';
+            $project_req_detail->total_amount = floatval($detail['amount_required']) * 0.09 + floatval($detail['amount_required']);
             $project_req_detail->project_requirement_id = $new->id;
             $project_req_detail->save();
         }

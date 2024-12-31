@@ -20,8 +20,10 @@ class CreateProjectRequirementDetailsTable extends Migration
             $table->string('first_name');
             $table->string('father_last_name');
             $table->string('mother_last_name');
-            $table->string('amount_required');
-            $table->string('amount_rrhh');
+            $table->decimal('amount_required',8,2);
+            $table->decimal('amount_rrhh',8,2);
+            $table->decimal('essalud',8,2);
+            $table->decimal('total_amount',8,2);
             $table->string('observation');
             $table->unsignedBigInteger('job_title_id')->nullable();
             $table->text('job_profiles_selected')->nullable();

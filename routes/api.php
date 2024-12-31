@@ -94,6 +94,12 @@ Route::get('project-requirement-details/delete/{id}', 'ProjectRequirementDetailC
 Route::post('project-requirement-details/store', 'ProjectRequirementDetailController@store');
 Route::post('project-requirement-details/update/no-rrhh', 'ProjectRequirementDetailController@update_no_rrhh');
 
+// PERIODS
+Route::get('period-requirement-details/list-by-req-detail/{project_requirement_id}', 'PeriodProjectRequirementDetailController@list');
+Route::post('period-requirement-details/store', 'PeriodProjectRequirementDetailController@store');
+Route::get('period-requirement-details/delete/{id}', 'PeriodProjectRequirementDetailController@delete');
+Route::post('period-requirement-details/update', 'PeriodProjectRequirementDetailController@update');
+
 Route::get('work-experiences/list/{employee_id}', 'WorkExperienceController@list');
 Route::post('work-experiences/store', 'WorkExperienceController@store');
 Route::post('work-experiences/update', 'WorkExperienceController@update');

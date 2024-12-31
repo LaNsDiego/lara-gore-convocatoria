@@ -28,6 +28,7 @@ class ProjectRequirementDetailController extends Controller
         $project_requirement_detail->mother_last_name = $request->mother_last_name;
         $project_requirement_detail->amount_required = $request->amount_required;
         $project_requirement_detail->amount_rrhh = 0;
+        $project_requirement_detail->total_amount = floatval($request->amount_required) * 0.09 + floatval($request->amount_required);
         $project_requirement_detail->observation = '';
         $project_requirement_detail->project_requirement_id = $request->project_requirement_id;
         $project_requirement_detail->save();
@@ -40,8 +41,10 @@ class ProjectRequirementDetailController extends Controller
             'amount_rrhh' => 'required|numeric',
         ]);
         $project_requirement_detail = ProjectRequirementDetail::find($request->id);
-        $project_requirement_detail->amount_rrhh = $request->amount_rrhh;
+        $project_requirement_detail->amount_rrhh = floatval($request->amount_rrhh) ;
         $project_requirement_detail->observation = $request->observation ?? '';
+        $project_requirement_detail->essalud = floatval($request->amount_rrhh) * 0.09;
+        $project_requirement_detail->total_amount = floatval($request->amount_rrhh) * 0.09 + floatval($request->amount_rrhh);
         $project_requirement_detail->save();
         return response()->json(['message' => 'Requerimiento actualizado correctamente']);
     }
