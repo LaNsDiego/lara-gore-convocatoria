@@ -39,9 +39,21 @@ class PeriodProjectRequirementDetailController extends Controller
             $endDate = Carbon::createFromFormat('d/m/Y', $period->end_date);
             $daysInPeriod = $startDate->diffInDays($endDate) + 1; // +1 para incluir el último día
     
+            // Calcular la cantidad de domingos en el rango de fechas
+            $sundaysCount = 0;
+            $currentDate = clone $startDate;
+            while ($currentDate->lte($endDate)) {
+                if ($currentDate->dayOfWeek === Carbon::SUNDAY) {
+                    $sundaysCount++;
+                }
+                $currentDate->addDay();
+            }
+
+            
             return response()->json([
                 'period' => $period,
-                'days_in_period' => $daysInPeriod
+                'days_in_period' => $daysInPeriod,
+                'sundays_count' => $sundaysCount
             ]);
         }
 

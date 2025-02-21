@@ -69,6 +69,12 @@ class PlanillaController extends Controller
             $detail->total_amount = $request->total;
             $detail->essalud = 0;
             $detail->save();
+        }else{
+            $detail = ProjectRequirementDetail::find($request->project_requirement_detail_id);
+            $detail->amount_required = 0;
+            $detail->total_amount = 0;
+            $detail->essalud = 0;
+            $detail->save();
         }
         return response()->json(['message' => 'Planilla creada correctamente.']);
     }
