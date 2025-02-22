@@ -5,6 +5,7 @@ use App\Models\Country;
 use App\Models\Department;
 use App\Models\ModuleGroup;
 use App\Models\PermissionSystem;
+use App\Models\ProjectRequirement;
 use App\Models\Province;
 use App\Models\Role;
 use App\Models\RoleHasPermission;
@@ -431,5 +432,28 @@ class DatabaseSeeder extends Seeder
                 }
             }
         }
+
+        ProjectRequirement::create([
+            'functional_sequence' => "0770",
+            'specific_expenditure' => "6.8.1.4.1",
+            'project_name' => "MEJORAMIENTO DEL SERVICIO EDUCATIVO DE LA IEI 337 CAPITAN SAMUEL ALCAZAR DISTRITO DE ALTO DE LA ALIANZA - PROVINCIA DE TACNA - DEPARTAMENTO DE TACNA",
+            'amount_as_specified' => "10137",
+            'is_freeze' => false,
+            'executor_unit' => "931",
+            'dni_responsible' => "72655591",
+            'full_name_responsible' => "MIGUEL ANGEL ZAPANA VELASQUEZ",
+            'document_type' => "Resolución",
+            'document_number' => "RES-T1-0001",
+        ]);
     }
+
+
+    // SIN DRIVERSIAF
+
+    
+        
+          
+
+        
+      
 }

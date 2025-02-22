@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CargoSir;
 use App\Models\ProjectRequirementDetail;
 use Illuminate\Http\Request;
 
 class ProjectRequirementDetailController extends Controller
 {
     public function list_by_project_requirement($project_requirement_id){
-        $project_requirement_details = ProjectRequirementDetail::where('project_requirement_id',$project_requirement_id)->get();
+        $project_requirement_details = ProjectRequirementDetail::
+        with(['planilla','job_title_assigned'])
+        ->where('project_requirement_id',$project_requirement_id)
+        ->get()
+        ->map(function($project_requirement_detail){
+            $project_requirement_detail->job_title = CargoSir::where('id_cargo',$project_requirement_detail->job_title_assigned->job_title_id)->first();
+           
+            return $project_requirement_detail;
+        });
         return response()->json($project_requirement_details);
     }
 

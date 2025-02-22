@@ -23,4 +23,11 @@ class ProjectRequirementDetail extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function planilla(){
+        return $this->hasOne(Planilla::class,'project_requirement_detail_id');
+    }
+    public function job_title_assigned(){
+        return $this->hasOne(JobTitleAssigned::class,'project_requirement_detail_id');
+    }
 }
