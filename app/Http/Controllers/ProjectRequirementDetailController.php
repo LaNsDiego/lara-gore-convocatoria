@@ -14,7 +14,9 @@ class ProjectRequirementDetailController extends Controller
         ->where('project_requirement_id',$project_requirement_id)
         ->get()
         ->map(function($project_requirement_detail){
-            $project_requirement_detail->job_title = CargoSir::where('id_cargo',$project_requirement_detail->job_title_assigned->job_title_id)->first();
+            if($project_requirement_detail->job_title_assigned != null){
+                $project_requirement_detail->job_title = CargoSir::where('id_cargo',$project_requirement_detail->job_title_assigned->job_title_id)->first();
+            }
            
             return $project_requirement_detail;
         });
